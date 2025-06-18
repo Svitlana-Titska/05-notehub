@@ -27,6 +27,10 @@ export default function App() {
     placeholderData: (prevData) => prevData,
   });
 
+  const handleCreateNote = (noteData: Omit<Note, "_id">) => {
+    createMutation.mutate(noteData);
+  };
+
   const createMutation = useMutation({
     mutationFn: createNote,
     onSuccess: () => {
@@ -42,10 +46,6 @@ export default function App() {
     },
   });
 
-  const handleCreateNote = (noteData: Omit<Note, "id">) => {
-    createMutation.mutate(noteData);
-  };
-
   const handleDeleteNote = (id: string) => {
     deleteMutation.mutate(id);
   };
@@ -56,6 +56,8 @@ export default function App() {
     <div className={styles.container}>
       <div className={styles.header}>
         <SearchBox value={search} onChange={setSearch} />
+
+        {}
         {data?.totalPages && data.totalPages > 1 && (
           <Pagination
             totalPages={data.totalPages}
@@ -63,6 +65,7 @@ export default function App() {
             onPageChange={setPage}
           />
         )}
+
         <button
           className={styles.createButton}
           onClick={() => setIsModalOpen(true)}
@@ -72,7 +75,7 @@ export default function App() {
       </div>
 
       {hasNotes ? (
-        <NoteList notes={data!.results} onDelete={handleDeleteNote} />
+        <NoteList notes={data.results} onDelete={handleDeleteNote} />
       ) : (
         <p>No notes found.</p>
       )}

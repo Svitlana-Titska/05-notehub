@@ -10,7 +10,6 @@ interface NoteModalProps {
 }
 
 export default function NoteModal({ onClose, onSubmit }: NoteModalProps) {
-  // Закриття по Escape
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {

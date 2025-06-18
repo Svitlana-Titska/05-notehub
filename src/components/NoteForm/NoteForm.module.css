@@ -7,23 +7,17 @@
 .formGroup {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
 }
 
 .input,
 .textarea,
 .select {
-  padding: 8px;
-  font-size: 16px;
   border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.input:focus,
-.textarea:focus,
-.select:focus {
-  outline: none;
-  border-color: #0a66c2;
+  border-radius: 6px;
+  padding: 10px 12px;
+  font-size: 16px;
+  background-color: #fff;
 }
 
 .textarea {
@@ -32,26 +26,22 @@
 
 .error {
   color: red;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .actions {
   display: flex;
   justify-content: flex-end;
-  gap: 8px;
+  gap: 12px;
+  margin-top: 12px;
 }
 
 .cancelButton {
   background-color: transparent;
   border: 1px solid #ccc;
   padding: 8px 16px;
-  font-size: 16px;
+  border-radius: 6px;
   cursor: pointer;
-  border-radius: 4px;
-}
-
-.cancelButton:hover {
-  background-color: #f2f2f2;
 }
 
 .submitButton {
@@ -59,12 +49,7 @@
   color: white;
   border: none;
   padding: 8px 16px;
-  font-size: 16px;
+  border-radius: 6px;
+  font-weight: bold;
   cursor: pointer;
-  border-radius: 4px;
-}
-
-.submitButton:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
 }
