@@ -34,7 +34,7 @@ export default function NoteModal({ onClose, onSubmit }: NoteModalProps) {
       aria-modal="true"
     >
       <div className={css.modal} onClick={(e) => e.stopPropagation()}>
-        <NoteForm onSubmit={onSubmit} onCancel={onClose} />
+        <NoteForm onSubmit={onSubmit} onClose={onClose} />
       </div>
     </div>,
     document.body
