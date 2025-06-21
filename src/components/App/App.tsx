@@ -3,7 +3,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useDebounce } from "use-debounce";
 
 import { fetchNotes, createNote, deleteNote } from "../../services/noteService";
-import type { Note, FetchNotesResponse } from "../../types/note";
+import type { Note } from "../../types/note";
 
 import SearchBox from "../SearchBox/SearchBox";
 import NoteList from "../NoteList/NoteList";
@@ -20,11 +20,10 @@ export default function App() {
 
   const queryClient = useQueryClient();
 
-  const { data, isLoading, isError } = useQuery<FetchNotesResponse, Error>({
+  const { data, isLoading, isError } = useQuery({
     queryKey: ["notes", debouncedSearch, page],
     queryFn: () => fetchNotes(debouncedSearch, page),
     staleTime: 5000,
-    keepPreviousData: true,
   });
 
   const createMutation = useMutation({
@@ -79,7 +78,7 @@ export default function App() {
       {isLoading && <p>Loading...</p>}
       {isError && <p>Error loading notes.</p>}
 
-      {!isLoading && !isError && Array.isArray(data?.notes) && (
+      {!isLoading && !isError && data && (
         <>
           {data.notes.length === 0 ? (
             <p>No notes found.</p>
