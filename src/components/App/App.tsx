@@ -10,7 +10,7 @@ import NoteList from "../NoteList/NoteList";
 import NoteModal from "../NoteModal/NoteModal";
 import Pagination from "../Pagination/Pagination";
 
-import styles from "./App.module.css";
+import css from "./App.module.css";
 
 export default function App() {
   const [page, setPage] = useState(1);
@@ -20,16 +20,12 @@ export default function App() {
 
   const queryClient = useQueryClient();
 
-  const { data } = useQuery<FetchNotesResponse, Error>({
-    queryKey: ["notes", page, debouncedSearch],
-    queryFn: () => fetchNotes(page, debouncedSearch),
+  const { data, isLoading, isError } = useQuery<FetchNotesResponse, Error>({
+    queryKey: ["notes", debouncedSearch, page],
+    queryFn: () => fetchNotes(debouncedSearch, page),
     staleTime: 5000,
-    placeholderData: (prevData) => prevData,
+    keepPreviousData: true,
   });
-
-  const handleCreateNote = (noteData: Omit<Note, "_id">) => {
-    createMutation.mutate(noteData);
-  };
 
   const createMutation = useMutation({
     mutationFn: createNote,
@@ -46,18 +42,24 @@ export default function App() {
     },
   });
 
-  const handleDeleteNote = (id: string) => {
-    deleteMutation.mutate(id);
+  const handleCreateNote = (note: Omit<Note, "_id">) => {
+    createMutation.mutate(note);
   };
 
-  const hasNotes = Array.isArray(data?.results) && data.results.length > 0;
+  const handleDeleteNote = (_id: string) => {
+    deleteMutation.mutate(_id);
+  };
+
+  const handleSearchChange = (value: string) => {
+    setSearch(value);
+    setPage(1);
+  };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.header}>
-        <SearchBox value={search} onChange={setSearch} />
+    <div className={css.container}>
+      <header className={css.header}>
+        <SearchBox value={search} onChange={handleSearchChange} />
 
-        {}
         {data?.totalPages && data.totalPages > 1 && (
           <Pagination
             totalPages={data.totalPages}
@@ -67,17 +69,24 @@ export default function App() {
         )}
 
         <button
-          className={styles.createButton}
+          className={css.createButton}
           onClick={() => setIsModalOpen(true)}
         >
           Create note +
         </button>
-      </div>
+      </header>
 
-      {hasNotes ? (
-        <NoteList notes={data.results} onDelete={handleDeleteNote} />
-      ) : (
-        <p>No notes found.</p>
+      {isLoading && <p>Loading...</p>}
+      {isError && <p>Error loading notes.</p>}
+
+      {!isLoading && !isError && Array.isArray(data?.notes) && (
+        <>
+          {data.notes.length === 0 ? (
+            <p>No notes found.</p>
+          ) : (
+            <NoteList notes={data.notes} onDelete={handleDeleteNote} />
+          )}
+        </>
       )}
 
       {isModalOpen && (

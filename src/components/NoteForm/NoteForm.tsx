@@ -1,12 +1,19 @@
 import { useFormik } from "formik";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import * as Yup from "yup";
+import { createNote } from "../../services/noteService";
 import type { Note } from "../../types/note";
 import css from "./NoteForm.module.css";
 
 interface NoteFormProps {
-  onSubmit: (note: Omit<Note, "_id">) => void;
-  onCancel: () => void;
+  onClose: () => void;
 }
+
+type NewNote = {
+  title: string;
+  content: string;
+  tag: Note["tag"];
+};
 
 const validationSchema = Yup.object({
   title: Yup.string().min(3).max(50).required("Required"),
@@ -16,13 +23,30 @@ const validationSchema = Yup.object({
     .required("Required"),
 });
 
-export default function NoteForm({ onSubmit, onCancel }: NoteFormProps) {
-  const formik = useFormik<Omit<Note, "_id">>({
-    initialValues: { title: "", content: "", tag: "Todo" },
+export default function NoteForm({ onClose }: NoteFormProps) {
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: createNote,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["notes"] });
+      onClose();
+    },
+  });
+
+  const formik = useFormik<NewNote>({
+    initialValues: {
+      title: "",
+      content: "",
+      tag: "Todo",
+    },
     validationSchema,
     onSubmit: (values, { resetForm }) => {
-      onSubmit(values);
-      resetForm(); // ⬅️ Скидуємо форму після сабміту
+      mutation.mutate(values, {
+        onSuccess: () => {
+          resetForm();
+        },
+      });
     },
   });
 
@@ -82,7 +106,7 @@ export default function NoteForm({ onSubmit, onCancel }: NoteFormProps) {
       </div>
 
       <div className={css.actions}>
-        <button type="button" className={css.cancelButton} onClick={onCancel}>
+        <button type="button" className={css.cancelButton} onClick={onClose}>
           Cancel
         </button>
         <button

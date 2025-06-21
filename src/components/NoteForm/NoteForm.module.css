@@ -18,6 +18,15 @@
   padding: 10px 12px;
   font-size: 16px;
   background-color: #fff;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.input:focus,
+.textarea:focus,
+.select:focus {
+  border-color: #0a66c2;
+
+  outline: none;
 }
 
 .textarea {
