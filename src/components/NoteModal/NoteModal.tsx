@@ -1,15 +1,13 @@
 import { useEffect } from "react";
 import { createPortal } from "react-dom";
 import NoteForm from "../NoteForm/NoteForm";
-import type { Note } from "../../types/note";
 import css from "./NoteModal.module.css";
 
 interface NoteModalProps {
   onClose: () => void;
-  onSubmit: (note: Omit<Note, "_id">) => void;
 }
 
-export default function NoteModal({ onClose, onSubmit }: NoteModalProps) {
+export default function NoteModal({ onClose }: NoteModalProps) {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -26,15 +24,21 @@ export default function NoteModal({ onClose, onSubmit }: NoteModalProps) {
     };
   }, [onClose]);
 
+  const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.target === e.currentTarget) {
+      onClose();
+    }
+  };
+
   return createPortal(
     <div
       className={css.backdrop}
-      onClick={onClose}
+      onClick={handleBackdropClick}
       role="dialog"
       aria-modal="true"
     >
-      <div className={css.modal} onClick={(e) => e.stopPropagation()}>
-        <NoteForm onSubmit={onSubmit} onClose={onClose} />
+      <div className={css.modal}>
+        <NoteForm onClose={onClose} />
       </div>
     </div>,
     document.body
