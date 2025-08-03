@@ -27,7 +27,12 @@ export default function NoteList({ notes }: NoteListProps) {
             <span className={`${css.tag} ${css[`tag-${tag.toLowerCase()}`]}`}>
               {tag}
             </span>
-            <button className={css.button} onClick={() => mutation.mutate(id)}>
+            {/* Відключаємо кнопку під час виконання мутації, щоб запобігти дублюванню запитів */}
+            <button
+              className={css.button}
+              disabled={mutation.isPending}
+              onClick={() => mutation.mutate(id)}
+            >
               Delete
             </button>
           </div>
