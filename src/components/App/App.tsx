@@ -6,7 +6,8 @@ import { fetchNotes } from "../../services/noteService";
 
 import SearchBox from "../SearchBox/SearchBox";
 import NoteList from "../NoteList/NoteList";
-import NoteModal from "../Modal/Modal";
+import Modal from "../Modal/Modal";
+import NoteForm from "../NoteForm/NoteForm";
 import Pagination from "../Pagination/Pagination";
 
 import css from "./App.module.css";
@@ -63,7 +64,12 @@ export default function App() {
         </>
       )}
 
-      {isModalOpen && <NoteModal onClose={() => setIsModalOpen(false)} />}
+      {/* передаємо NoteForm у Modal через children */}
+      {isModalOpen && (
+        <Modal onClose={() => setIsModalOpen(false)}>
+          <NoteForm onClose={() => setIsModalOpen(false)} />
+        </Modal>
+      )}
     </div>
   );
 }

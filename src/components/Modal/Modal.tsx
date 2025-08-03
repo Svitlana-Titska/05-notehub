@@ -1,13 +1,13 @@
-import { useEffect } from "react";
+import { useEffect, type ReactNode } from "react";
 import { createPortal } from "react-dom";
-import NoteForm from "../NoteForm/NoteForm";
 import css from "./Modal.module.css";
 
-interface NoteModalProps {
+interface ModalProps {
   onClose: () => void;
+  children: ReactNode;
 }
 
-export default function NoteModal({ onClose }: NoteModalProps) {
+export default function Modal({ onClose, children }: ModalProps) {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -37,9 +37,7 @@ export default function NoteModal({ onClose }: NoteModalProps) {
       role="dialog"
       aria-modal="true"
     >
-      <div className={css.modal}>
-        <NoteForm onClose={onClose} />
-      </div>
+      <div className={css.modal}>{children}</div>
     </div>,
     document.body
   );
