@@ -1,60 +1,59 @@
-.container {
+.app {
   min-height: 100vh;
-  background-color: #f0f2f5;
-  padding: 32px 16px;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: var(--bg);
 }
 
-.header {
-  display: flex;
-  flex-wrap: wrap;
+.toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: #f3f4f6;
+  border-bottom: 1px solid var(--border);
+}
+
+.container {
+  max-width: var(--container-max);
+  width: 100%;
+  margin: 0 auto;
+  padding-inline: var(--side-pad);
+}
+
+.toolbarInner {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  justify-content: space-between;
   gap: 16px;
-  margin-bottom: 24px;
+  padding-block: 16px;
 }
 
-.createButton {
-  padding: 10px 16px;
+.toolbar + .container {
+  padding-top: 12px;
+}
+
+.left {
+  justify-self: start;
+}
+.center {
+  justify-self: center;
+}
+.right {
+  justify-self: end;
+}
+
+.button {
+  padding: 8px 14px;
   font-size: 16px;
-  background-color: #0a66c2;
-  color: white;
+  color: #fff;
+  background: var(--blue);
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
-  font-weight: bold;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+  transition: background-color 0.2s ease, transform 0.06s ease;
 }
-
-.pagination {
-  display: flex;
-  justify-content: center;
-  gap: 6px;
-  margin: 16px 0;
-  list-style: none;
-  padding: 0;
-  width: 100%;
+.button:hover {
+  background: #1d4ed8;
 }
-
-.pagination li {
-  width: 40px;
-  height: 40px;
-  border: 1px solid #ccc;
-  cursor: pointer;
-  border-radius: 4px;
-}
-
-.pagination a {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  text-decoration: none;
-  color: #333;
-}
-
-.active {
-  background-color: #0a66c2;
-  color: white;
-  font-weight: bold;
+.button:active {
+  transform: translateY(1px);
 }

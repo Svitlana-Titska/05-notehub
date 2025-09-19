@@ -7,58 +7,65 @@
 .formGroup {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #212529;
 }
 
 .input,
 .textarea,
 .select {
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  padding: 10px 12px;
-  font-size: 16px;
-  background-color: #fff;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.input:focus,
-.textarea:focus,
-.select:focus {
-  border-color: #0a66c2;
-
-  outline: none;
-}
-
-.textarea {
-  resize: vertical;
-}
-
-.error {
-  color: red;
-  font-size: 12px;
+  margin-top: 4px;
+  padding: 8px 12px;
+  font-size: 14px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  resize: none;
 }
 
 .actions {
   display: flex;
   justify-content: flex-end;
-  gap: 12px;
-  margin-top: 12px;
-}
-
-.cancelButton {
-  background-color: transparent;
-  border: 1px solid #ccc;
-  padding: 8px 16px;
-  border-radius: 6px;
-  cursor: pointer;
+  gap: 8px;
 }
 
 .submitButton {
-  background-color: #0a66c2;
-  color: white;
-  border: none;
   padding: 8px 16px;
-  border-radius: 6px;
-  font-weight: bold;
+  font-size: 16px;
+  background-color: #0d6efd;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
   cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.submitButton:hover {
+  background-color: #0b5ed7;
+}
+
+.submitButton:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+
+.cancelButton {
+  padding: 8px 16px;
+  font-size: 16px;
+  background-color: #f8f9fa;
+  color: #212529;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.cancelButton:hover {
+  background-color: #e2e6ea;
+}
+
+.error {
+  color: #dc3545;
+  font-size: 12px;
+  margin-top: 4px;
 }

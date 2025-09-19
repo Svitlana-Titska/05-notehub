@@ -1,62 +1,84 @@
 .list {
+  list-style: none;
+  margin: 24px 0 48px;
+  padding: 0;
+  width: 100%;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
-  padding: 24px 0;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
 }
 
 .listItem {
-  background-color: #ffffff;
-  padding: 16px;
-  border-radius: 8px;
-
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  gap: 8px;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 22px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
   min-height: 180px;
 }
 
 .title {
-  font-size: 18px;
-  font-weight: 600;
-  margin-bottom: 8px;
+  margin: 0;
+  color: #111827;
+  font-size: 19px;
+  line-height: 1.2;
+  font-weight: 700;
 }
-
 .content {
-  flex-grow: 1;
-  font-size: 14px;
-  color: #333333;
-  margin-bottom: 12px;
+  margin: 0;
+  color: #4b5563;
+  line-height: 1.5;
 }
 
 .footer {
+  margin-top: auto;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+  gap: 12px;
 }
 
 .tag {
-  padding: 4px 10px;
-  border-radius: 12px;
-  font-size: 14px;
-  font-weight: 500;
-  display: inline-block;
-  background-color: #eaf5ff;
-  color: #0a66c2;
-  border: 1px solid #cce4ff;
+  display: inline-flex;
+  align-items: center;
+  height: 26px;
+  padding: 0 10px;
+  font-size: 13px;
+  border-radius: 999px;
+  background: #e8f0ff;
+  color: #2563eb;
+  border: 1px solid #dbe7ff;
 }
 
 .button {
-  background-color: #ef4444;
-  color: white;
+  appearance: none;
   border: none;
   padding: 6px 12px;
-  border-radius: 4px;
+  border-radius: 8px;
+  background: #ef4444;
+  color: #fff;
+  font-weight: 600;
   cursor: pointer;
-  font-size: 14px;
-  transition: background-color 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+  transition: transform 0.06s ease, background 0.2s ease;
+}
+.button:hover {
+  background: #dc2626;
+}
+.button:active {
+  transform: translateY(1px);
 }
 
-.button:hover {
-  background-color: #dc2626;
+@media (max-width: 1200px) {
+  .list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 900px) {
+  .list {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }

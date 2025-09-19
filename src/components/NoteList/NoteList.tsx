@@ -1,38 +1,21 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { Note } from "../../types/note";
-import { deleteNote } from "../../services/noteService";
 import css from "./NoteList.module.css";
 
-interface NoteListProps {
+export interface NoteListProps {
   notes: Note[];
+  onDelete: (id: string) => void;
 }
 
-export default function NoteList({ notes }: NoteListProps) {
-  const queryClient = useQueryClient();
-
-  const mutation = useMutation({
-    mutationFn: deleteNote,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["notes"] });
-    },
-  });
-
+export default function NoteList({ notes, onDelete }: NoteListProps) {
   return (
     <ul className={css.list}>
-      {notes.map(({ id, title, content, tag }) => (
-        <li className={css.listItem} key={id}>
-          <h2 className={css.title}>{title}</h2>
-          <p className={css.content}>{content}</p>
+      {notes.map((n) => (
+        <li className={css.listItem} key={n.id}>
+          <h2 className={css.title}>{n.title}</h2>
+          <p className={css.content}>{n.content}</p>
           <div className={css.footer}>
-            <span className={`${css.tag} ${css[`tag-${tag.toLowerCase()}`]}`}>
-              {tag}
-            </span>
-            {/* Відключаємо кнопку під час виконання мутації, щоб запобігти дублюванню запитів */}
-            <button
-              className={css.button}
-              disabled={mutation.isPending}
-              onClick={() => mutation.mutate(id)}
-            >
+            <span className={css.tag}>{n.tag}</span>
+            <button className={css.button} onClick={() => onDelete(n.id)}>
               Delete
             </button>
           </div>
