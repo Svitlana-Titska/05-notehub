@@ -1,12 +1,7 @@
-import { ReactNode, useEffect } from "react";
+import { useEffect } from "react";
+import type { ReactNode } from "react";
 import { createPortal } from "react-dom";
 import css from "./Modal.module.css";
-
-const modalRoot = document.getElementById("modal-root");
-
-if (!modalRoot) {
-  throw new Error("Modal root element (#modal-root) not found in index.html");
-}
 
 export interface ModalProps {
   children: ReactNode;
@@ -16,21 +11,22 @@ export interface ModalProps {
 export default function Modal({ children, onClose }: ModalProps) {
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        onClose();
-      }
+      if (e.key === "Escape") onClose();
     };
     window.addEventListener("keydown", onKey);
-    return () => {
-      window.removeEventListener("keydown", onKey);
-    };
+    return () => window.removeEventListener("keydown", onKey);
   }, [onClose]);
 
   const onBackdrop = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (e.target === e.currentTarget) {
-      onClose();
-    }
+    if (e.target === e.currentTarget) onClose();
   };
+
+  const target: Element | null =
+    typeof document !== "undefined"
+      ? document.getElementById("modal-root") ?? document.body
+      : null;
+
+  if (!target) return null;
 
   return createPortal(
     <div
@@ -41,6 +37,6 @@ export default function Modal({ children, onClose }: ModalProps) {
     >
       <div className={css.modal}>{children}</div>
     </div>,
-    modalRoot
+    target
   );
 }
