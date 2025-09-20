@@ -1,21 +1,27 @@
 @import "modern-normalize/modern-normalize.css";
 
+/* ОДНА спільна ширина для всього лейауту */
 :root {
-  --container-max: 1120px;
+  --container-max: 1400px; /* трохи ширше, як просив */
   --side-pad: 24px;
+
   --bg: #edf2f7;
   --text: #111827;
   --border: #e5e7eb;
   --blue: #2563eb;
 }
 
+/* стабільна бокс-модель і правий край без «стрибків» скролу */
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
 
-html,
+html {
+  height: 100%;
+  scrollbar-gutter: stable both-edges;
+}
 body,
 #root {
   height: 100%;
@@ -29,8 +35,13 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  /* завжди резервуємо місце під вертикальний скролбар,
+     щоб праві краї хедера/контенту були ідеально рівні */
+  overflow-y: scroll;
 }
 
+/* уніфікація форм/лінків */
 button,
 input,
 textarea,
